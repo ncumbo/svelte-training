@@ -1,29 +1,10 @@
 <script lang="ts">
-  interface WorkExperience {
-    jobTitle: string;
-    company: string;
-    startDate: string;
-    endDate?: string;
+  import type { DevExperience } from "$lib/types/sanity";
+
+  interface ExperienceTableProps {
+    workExperience: DevExperience[];
   }
-  const workExperience: WorkExperience[] = [
-    {
-      jobTitle: "Senior Business Transformation Consultant",
-      company: "IBM",
-      startDate: "July 2021",
-    },
-    {
-      jobTitle: "Technology and Operations Intern",
-      company: "KeyBank",
-      startDate: "June 2020",
-      endDate: "July 2021",
-    },
-    {
-      jobTitle: "Junior QA & Application Support Intern",
-      company: "CoachMePlus",
-      startDate: "May 2019",
-      endDate: "March 2020",
-    },
-  ];
+  let { workExperience }: ExperienceTableProps = $props();
 </script>
 
 <section class="default-margin work-experience mt-m">
@@ -35,16 +16,19 @@
           <div class="company-and-date">
             <p>{job.company}</p>
             <p class="dark-grey">
-              {job.startDate}
+              {job.startDate.slice(0, 7)}
               {#if job.endDate}
-                - {job.endDate}{:else}
-                - Present{/if}
+                / {job.endDate.slice(0, 7)}
+              {:else}
+                / present
+              {/if}
             </p>
           </div>
         </article>
-      </li>{/each}
+      </li>
+    {/each}
   </ul>
-  <h2 class="headline">Past work<br /> Experience</h2>
+  <h2 class="headline">Past work <br /> Experience</h2>
 </section>
 
 <style>
@@ -61,8 +45,9 @@
   .headline {
     text-align: right;
   }
+
   .work-item {
-    border-bottom: 1px boid #f0eded;
+    border-bottom: 1px solid #f0eded;
     padding-bottom: 12px;
   }
 
@@ -73,6 +58,7 @@
   .work-item p {
     margin-bottom: 0;
   }
+
   .company-and-date {
     display: flex;
     justify-content: space-between;
